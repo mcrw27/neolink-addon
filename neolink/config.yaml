@@ -34,8 +34,6 @@ schema:
       uid: str
       password: str
       address: str
-      discovery?: match(^(local|mqtt)$)
-      mqtt_features?: [str]
   bind: str
   debug: bool
   mqtt:
