@@ -14,18 +14,19 @@ RUN \
         curl \
         jq \
         tzdata \
+        unzip \
     && case "${BUILD_ARCH}" in \
-        aarch64) NEOLINK_ARCH="arm64" ;; \
-        armhf|armv7) NEOLINK_ARCH="arm" ;; \
-        amd64) NEOLINK_ARCH="amd64" ;; \
-        i386) NEOLINK_ARCH="386" ;; \
+        aarch64) NEOLINK_ARCH="aarch64" ;; \
+        armhf|armv7) NEOLINK_ARCH="armv7" ;; \
+        amd64) NEOLINK_ARCH="x86_64" ;; \
+        i386) NEOLINK_ARCH="i686" ;; \
         *) echo "Unsupported architecture: ${BUILD_ARCH}" && exit 1 ;; \
        esac \
-    && curl -J -L -o /tmp/neolink.tar.gz \
-        "https://github.com/thirtythreeforty/neolink/releases/latest/download/neolink-linux-${NEOLINK_ARCH}.tar.gz" \
-    && tar -xzf /tmp/neolink.tar.gz -C /usr/local/bin/ \
+    && curl -J -L -o /tmp/neolink.zip \
+        "https://github.com/QuantumEntangledAndy/neolink/releases/latest/download/neolink-${NEOLINK_ARCH}-unknown-linux-musl.zip" \
+    && unzip /tmp/neolink.zip -d /usr/local/bin/ \
     && chmod +x /usr/local/bin/neolink \
-    && rm /tmp/neolink.tar.gz
+    && rm /tmp/neolink.zip
 
 # Copy run script
 COPY run.sh /
