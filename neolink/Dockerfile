@@ -24,9 +24,10 @@ RUN \
        esac \
     && curl -J -L -o /tmp/neolink.zip \
         "https://github.com/QuantumEntangledAndy/neolink/releases/download/v0.6.3.rc.2/neolink_linux_${NEOLINK_ARCH}.zip" \
-    && unzip /tmp/neolink.zip -d /usr/local/bin/ \
+    && unzip /tmp/neolink.zip -d /tmp/ \
+    && cp /tmp/neolink_linux_${NEOLINK_ARCH}/neolink /usr/local/bin/neolink \
     && chmod +x /usr/local/bin/neolink \
-    && rm /tmp/neolink.zip
+    && rm -rf /tmp/neolink.zip /tmp/neolink_linux_${NEOLINK_ARCH}
 
 # Copy run script
 COPY run.sh /
