@@ -35,7 +35,7 @@ schema:
       password: str
       address: str
       discovery?: match(^(local|mqtt)$)
-      streams:
+      streams?:
         - name: str
           channel: int
           format: str
