@@ -1,5 +1,5 @@
 name: Neolink
-version: "1.0.0"
+version: "1.1.0"
 slug: neolink
 description: "An RTSP bridge for Reolink IP cameras using the neolink binary"
 url: https://github.com/thirtythreeforty/neolink
@@ -20,18 +20,36 @@ options:
   cameras: []
   bind: "0.0.0.0:8554"
   debug: false
+  mqtt:
+    enabled: false
+    broker: ""
+    port: 1883
+    username: ""
+    password: ""
+    discovery: true
+    discovery_topic: "homeassistant"
 schema:
   cameras:
     - name: str
       uid: str
       password: str
       address: str
+      discovery?: match(^(local|mqtt)$)
       streams:
         - name: str
           channel: int
           format: str
+      mqtt_features?: [str]
   bind: str
   debug: bool
+  mqtt:
+    enabled: bool
+    broker: str
+    port: port
+    username: str
+    password: password
+    discovery: bool
+    discovery_topic: str
 ports:
   8554/tcp: 8554
 map:

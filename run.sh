@@ -23,6 +23,28 @@ if bashio::config.true 'debug'; then
     echo 'debug = true' >> "${NEOLINK_CONFIG_PATH}"
 fi
 
+# Add MQTT configuration if enabled
+if bashio::config.true 'mqtt.enabled'; then
+    MQTT_BROKER=$(bashio::config 'mqtt.broker')
+    MQTT_PORT=$(bashio::config 'mqtt.port')
+    MQTT_USERNAME=$(bashio::config 'mqtt.username')
+    MQTT_PASSWORD=$(bashio::config 'mqtt.password')
+    
+    bashio::log.info "Configuring MQTT: ${MQTT_BROKER}:${MQTT_PORT}"
+    
+    cat >> "${NEOLINK_CONFIG_PATH}" <<EOF
+
+[mqtt]
+broker_addr = "${MQTT_BROKER}"
+port = ${MQTT_PORT}
+EOF
+    
+    # Add credentials if provided
+    if [[ -n "${MQTT_USERNAME}" ]]; then
+        echo "credentials = [\"${MQTT_USERNAME}\", \"${MQTT_PASSWORD}\"]" >> "${NEOLINK_CONFIG_PATH}"
+    fi
+fi
+
 # Process cameras configuration
 if bashio::config.has_value 'cameras'; then
     for camera in $(bashio::config 'cameras | keys[]'); do
@@ -40,8 +62,33 @@ name = "${NAME}"
 username = "${UID}"
 password = "${PASSWORD}"
 address = "${ADDRESS}"
-
 EOF
+        
+        # Add camera discovery if configured
+        if bashio::config.has_value "cameras[${camera}].discovery"; then
+            DISCOVERY=$(bashio::config "cameras[${camera}].discovery")
+            echo "discovery = \"${DISCOVERY}\"" >> "${NEOLINK_CONFIG_PATH}"
+        fi
+        
+        echo "" >> "${NEOLINK_CONFIG_PATH}"
+        
+        # Add MQTT discovery configuration if MQTT is enabled and discovery is true
+        if bashio::config.true 'mqtt.enabled' && bashio::config.true 'mqtt.discovery'; then
+            DISCOVERY_TOPIC=$(bashio::config 'mqtt.discovery_topic')
+            cat >> "${NEOLINK_CONFIG_PATH}" <<EOF
+[cameras.mqtt]
+[cameras.mqtt.discovery]
+topic = "${DISCOVERY_TOPIC}"
+EOF
+            
+            # Add MQTT features if configured
+            if bashio::config.has_value "cameras[${camera}].mqtt_features"; then
+                FEATURES=$(bashio::config "cameras[${camera}].mqtt_features")
+                echo "features = ${FEATURES}" >> "${NEOLINK_CONFIG_PATH}"
+            fi
+            
+            echo "" >> "${NEOLINK_CONFIG_PATH}"
+        fi
         
         # Add streams if configured
         if bashio::config.has_value "cameras[${camera}].streams"; then
