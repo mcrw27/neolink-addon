@@ -134,8 +134,62 @@ Configure `mqtt_features` for each camera to enable specific functionality:
 
 This add-on works with Reolink cameras that use the "Baichuan" protocol, typically:
 - Battery-powered cameras (Argus series, Reolink Go, etc.)
+- LTE cameras (Go, Go Plus, Go PT, Lumus)
 - Some WiFi cameras that don't support native RTSP
 - Cameras that use port 9000 for communication
+
+### LTE Camera Support
+
+LTE cameras are fully supported but require special considerations:
+
+**✅ Compatible LTE Models:**
+- Reolink Go series (Go, Go Plus, Go PT)
+- Reolink Lumus
+- Other battery + LTE cameras using Baichuan protocol
+
+**⚠️ Important LTE Considerations:**
+
+1. **Data Usage**: LTE cameras consume cellular data for:
+   - Initial connection and authentication
+   - MQTT messages (motion alerts, battery status)
+   - RTSP streaming (**high bandwidth usage**)
+
+2. **Battery Life**: Continuous streaming significantly reduces battery life:
+   - Consider motion-triggered recording instead of 24/7 streaming
+   - Use lower resolution sub-streams to conserve battery
+   - Prioritize MQTT alerts over continuous video streaming
+
+3. **Network Setup**:
+   - LTE cameras need internet access to reach your MQTT broker
+   - If Home Assistant is on local network, ensure MQTT broker is internet-accessible
+   - May require port forwarding, VPN, or cloud MQTT broker
+
+4. **Connection Reliability**:
+   - LTE connections can be intermittent
+   - Add-on automatically attempts reconnection
+   - Enable debug logging to monitor connection status
+
+**Recommended LTE Configuration:**
+
+```yaml
+cameras:
+  - name: "Remote Gate"
+    uid: "admin"
+    password: "your_password"
+    address: "192.168.1.100"  # Or camera UID for remote access
+    discovery: "mqtt"
+    mqtt_features: ["Camera", "Motion", "Battery"]
+    streams:
+      - name: "sub"  # Use sub-stream to save cellular data
+        channel: 1
+        format: "h264"
+mqtt:
+  enabled: true
+  broker: "your.mqtt.broker.com"  # Use internet-accessible broker
+  port: 1883
+  username: "mqtt_user"
+  password: "mqtt_password"
+```
 
 ## Troubleshooting
 
