@@ -55,4 +55,3 @@ ports:
 map:
   - config:rw
   - ssl:ro
-image: ghcr.io/home-assistant/{arch}-addon-neolink
