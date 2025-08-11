@@ -1,0 +1,40 @@
+name: Neolink
+version: "1.0.0"
+slug: neolink
+description: "An RTSP bridge for Reolink IP cameras using the neolink binary"
+url: https://github.com/thirtythreeforty/neolink
+arch:
+  - armhf
+  - armv7
+  - aarch64
+  - amd64
+  - i386
+startup: services
+boot: auto
+hassio_api: true
+ingress: false
+panel_icon: mdi:cctv
+panel_title: Neolink
+host_network: true
+options:
+  cameras: []
+  bind: "0.0.0.0:8554"
+  debug: false
+schema:
+  cameras:
+    - name: str
+      uid: str
+      password: str
+      address: str
+      streams:
+        - name: str
+          channel: int
+          format: str
+  bind: str
+  debug: bool
+ports:
+  8554/tcp: 8554
+map:
+  - config:rw
+  - ssl:ro
+image: ghcr.io/home-assistant/{arch}-addon-neolink
