@@ -23,7 +23,7 @@ RUN \
         *) echo "Unsupported architecture: ${BUILD_ARCH}" && exit 1 ;; \
        esac \
     && curl -J -L -o /tmp/neolink.zip \
-        "https://github.com/QuantumEntangledAndy/neolink/releases/latest/download/neolink-${NEOLINK_ARCH}-unknown-linux-musl.zip" \
+        "https://github.com/QuantumEntangledAndy/neolink/releases/download/v0.6.3.rc.2/neolink-${NEOLINK_ARCH}-unknown-linux-musl.zip" \
     && unzip /tmp/neolink.zip -d /usr/local/bin/ \
     && chmod +x /usr/local/bin/neolink \
     && rm /tmp/neolink.zip
