@@ -35,10 +35,6 @@ schema:
       password: str
       address: str
       discovery?: match(^(local|mqtt)$)
-      streams?:
-        - name: str
-          channel: int
-          format: str
       mqtt_features?: [str]
   bind: str
   debug: bool
