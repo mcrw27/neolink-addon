@@ -1,7 +1,9 @@
 ARG BUILD_FROM
+FROM $BUILD_FROM
+
+# Re-declare args after FROM
 ARG BUILD_ARCH
 ARG BUILD_VERSION
-FROM $BUILD_FROM
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
