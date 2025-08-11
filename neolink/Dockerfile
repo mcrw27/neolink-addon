@@ -16,14 +16,14 @@ RUN \
         tzdata \
         unzip \
     && case "${BUILD_ARCH}" in \
-        aarch64) NEOLINK_ARCH="aarch64" ;; \
+        aarch64) NEOLINK_ARCH="arm64" ;; \
         armhf|armv7) NEOLINK_ARCH="armv7" ;; \
         amd64) NEOLINK_ARCH="x86_64" ;; \
         i386) NEOLINK_ARCH="i686" ;; \
         *) echo "Unsupported architecture: ${BUILD_ARCH}" && exit 1 ;; \
        esac \
     && curl -J -L -o /tmp/neolink.zip \
-        "https://github.com/QuantumEntangledAndy/neolink/releases/download/v0.6.3.rc.2/neolink-${NEOLINK_ARCH}-unknown-linux-musl.zip" \
+        "https://github.com/QuantumEntangledAndy/neolink/releases/download/v0.6.3.rc.2/neolink_linux_${NEOLINK_ARCH}.zip" \
     && unzip /tmp/neolink.zip -d /usr/local/bin/ \
     && chmod +x /usr/local/bin/neolink \
     && rm /tmp/neolink.zip
