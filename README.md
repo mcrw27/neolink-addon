@@ -8,11 +8,13 @@ Neolink allows you to use NVR software or Home Assistant to receive video stream
 
 ## Installation
 
-1. Add this repository to your Home Assistant add-on store
-2. Install the Neolink add-on
-3. Configure your cameras in the add-on configuration
-4. Start the add-on
-5. Add the RTSP streams to Home Assistant using the Generic Camera integration
+1. In Home Assistant, go to **Settings** → **Add-ons** → **Add-on Store**
+2. Click the **3-dot menu** (⋮) in the top right → **Repositories**
+3. Add this repository URL: `https://github.com/mcrw27/neolink-addon`
+4. Find and install the **Neolink** add-on
+5. Configure your cameras in the add-on configuration
+6. Start the add-on
+7. Cameras will appear automatically (MQTT) or add RTSP streams manually
 
 ## Configuration
 
