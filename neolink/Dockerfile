@@ -43,7 +43,7 @@ LABEL \
     maintainer="Home Assistant Community Add-ons" \
     org.opencontainers.image.title="Neolink" \
     org.opencontainers.image.description="An RTSP bridge for Reolink IP cameras" \
-    org.opencontainers.image.source="https://github.com/home-assistant/addons" \
+    org.opencontainers.image.source="https://github.com/QuantumEntangledAndy/neolink" \
     org.opencontainers.image.licenses="MIT"
 
 CMD [ "/run.sh" ]

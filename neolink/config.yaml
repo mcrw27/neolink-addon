@@ -2,7 +2,7 @@ name: Neolink
 version: "1.1.0"
 slug: neolink
 description: "An RTSP bridge for Reolink IP cameras using the neolink binary"
-url: https://github.com/thirtythreeforty/neolink
+url: https://github.com/QuantumEntangledAndy/neolink
 arch:
   - armhf
   - armv7
